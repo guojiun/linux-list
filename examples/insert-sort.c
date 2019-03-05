@@ -6,7 +6,7 @@
 
 #include "../private/common.h"
 
-static uint16_t values[256];
+static uint16_t values[N];
 
 static void list_insert_sorted(struct listitem *entry, struct list_head *head)
 {
@@ -47,7 +47,7 @@ int main(void)
     struct listitem *item = NULL, *is = NULL;
     struct timeval start, end;
     size_t i;
-    FILE *f = fopen(NAME, "w");
+    FILE *f = fopen(NAME, "a+");
 
     random_shuffle_array(values, (uint16_t) ARRAY_SIZE(values));
 

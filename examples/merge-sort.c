@@ -6,7 +6,7 @@
 
 #include "../private/common.h"
 
-static uint16_t values[256];
+static uint16_t values[N];
 
 static void list_mergesort(struct list_head *head)
 {
@@ -54,13 +54,13 @@ static void list_mergesort(struct list_head *head)
     }
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
     struct list_head testlist;
     struct listitem *item, *is = NULL;
     struct timeval start, end;
     size_t i;
-    FILE *f = fopen(NAME, "w");
+    FILE *f = fopen(NAME, "a+");
 
     random_shuffle_array(values, (uint16_t) ARRAY_SIZE(values));
 
