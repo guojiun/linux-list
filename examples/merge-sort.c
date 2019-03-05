@@ -62,7 +62,11 @@ int main(int argc, char **argv)
     size_t i;
     FILE *f = fopen(NAME, "a+");
 
+#if SELECT
     random_shuffle_array(values, (uint16_t) ARRAY_SIZE(values));
+#elif 1 - select
+    sequential_array(values, (uint16_t) ARRAY_SIZE(values));
+#endif
 
     INIT_LIST_HEAD(&testlist);
 
