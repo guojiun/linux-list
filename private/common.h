@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "list.h"
+#include "../include/list.h"
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 
@@ -63,6 +63,28 @@ static inline void random_shuffle_array(uint16_t *operations, uint16_t len)
         operations[i] = operations[j];
         operations[j] = i;
     }
+}
+static inline double timeval_diff(struct timeval *difference,
+                                  struct timeval *end_time,
+                                  struct timeval *start_time)
+{
+    struct timeval temp_diff;
+
+    if (difference == NULL) {
+        difference = &temp_diff;
+    }
+
+    difference->tv_sec = end_time->tv_sec - start_time->tv_sec;
+    difference->tv_usec = end_time->tv_usec - start_time->tv_usec;
+
+    /* Using while instead of if below makes the code slightly more robust. */
+
+    while (difference->tv_usec < 0) {
+        difference->tv_usec += 1000000;
+        difference->tv_sec -= 1;
+    }
+
+    return difference->tv_sec + 1e-6 * difference->tv_usec;
 }
 
 #endif /* PRIVATE_COMMON_H */
