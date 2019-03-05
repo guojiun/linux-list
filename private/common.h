@@ -87,4 +87,12 @@ static inline double timeval_diff(struct timeval *difference,
     return difference->tv_sec + 1e-6 * difference->tv_usec;
 }
 
+static inline void sequential_array(uint16_t *operations, uint16_t len)
+{
+    uint16_t i;
+
+    for (i = 0; i < len; i++) {
+        operations[i] = i;
+    }
+}
 #endif /* PRIVATE_COMMON_H */
