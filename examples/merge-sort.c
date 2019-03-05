@@ -1,8 +1,10 @@
 #include <assert.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include "list.h"
+#include <sys/time.h>
+#include "../include/list.h"
 
-#include "common.h"
+#include "../private/common.h"
 
 static uint16_t values[256];
 
@@ -56,7 +58,9 @@ int main(void)
 {
     struct list_head testlist;
     struct listitem *item, *is = NULL;
+    struct timeval start, end;
     size_t i;
+    FILE *f = fopen(NAME, "w");
 
     random_shuffle_array(values, (uint16_t) ARRAY_SIZE(values));
 
@@ -72,9 +76,13 @@ int main(void)
     }
 
     assert(!list_empty(&testlist));
-
     qsort(values, ARRAY_SIZE(values), sizeof(values[0]), cmpint);
+    gettimeofday(&start, NULL);
     list_mergesort(&testlist);
+    gettimeofday(&end, NULL);
+    fprintf(f, "%ld %lf\n", ARRAY_SIZE(values),
+            timeval_diff(NULL, &end, &start));
+    fclose(f);
 
     i = 0;
     list_for_each_entry_safe (item, is, &testlist, list) {
